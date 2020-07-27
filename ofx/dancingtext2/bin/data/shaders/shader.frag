@@ -9,8 +9,8 @@ out vec4 outputColor;
 uniform float mouseX;
 uniform float mouseY;
 uniform vec2 u_resolution;
-uniform float u_time;
-
+//uniform float u_time;
+float u_time;
 uniform int multiplicationFactor = 10;
 uniform float threshold = 0.01;
 #define TWO_PI 6.28318530718
@@ -22,6 +22,7 @@ float rand(vec2 co)
 }
 void main()
 {
+    u_time = 1.0;
     vec2 st = varyingtexcoord / u_resolution;
     vec4 col = texture(tex0, varyingtexcoord);
     vec4 colB = texture(tex0, varyingtexcoord);
