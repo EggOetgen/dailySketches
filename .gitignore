@@ -12,6 +12,11 @@
 # general
 #########
 
+**/Makefile
+**/Project.xcconfig
+**/config.make
+**/openFrameworks-Info.plist
+**/*.xcodeproj/
 **/[Bb]uild/
 **/[Oo]bj/
 **.o
