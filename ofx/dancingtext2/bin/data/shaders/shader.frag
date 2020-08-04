@@ -9,8 +9,10 @@ out vec4 outputColor;
 uniform float mouseX;
 uniform float mouseY;
 uniform vec2 u_resolution;
-//uniform float u_time;
-float u_time;
+uniform vec2 u_mouse;
+
+uniform float u_time;
+//float u_time;
 uniform int multiplicationFactor = 10;
 uniform float threshold = 0.01;
 #define TWO_PI 6.28318530718
@@ -18,19 +20,25 @@ uniform float threshold = 0.01;
 float rand(vec2 co)
 {
 //    return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
-    return (dot(sin(co.x * TWO_PI), cos(TWO_PI * co.y)));
+    return (dot(sin(co.x * TWO_PI ), cos(TWO_PI * co.y )));
+//    return (dot(sin(co.x * TWO_PI), cos(TWO_PI * co.y))) + fract(sin(dot(co.xy ,vec2(12.9898,78.233))) );;
+
 }
 void main()
 {
-    u_time = 1.0;
+//    u_time = 1.0;
     vec2 st = varyingtexcoord / u_resolution;
     vec4 col = texture(tex0, varyingtexcoord);
-    vec4 colB = texture(tex0, varyingtexcoord);
+//    vec4 colB = texture(tex0, varyingtexcoord);
     vec2 dispTexCo = origtexcoord;
      vec2 dispTexCoV = varyingtexcoord;
-    
+//    vec2 stNorm =dispTexCoV
+   
     float mx = mouseX/u_resolution.x;
     float my = mouseY/u_resolution.y;
+//    float scl =1.0-fract(sqrt(  (   (st.x - mx) * (st.x - mx) ) +
+//                    (   (st.y - my) * (st.y - my) )   ));
+    
     mx -= 0.5;
     my -= 0.5;
 //    mx*=st.x;
@@ -42,18 +50,17 @@ void main()
 //    dispTexCo.y+= rand(st)*u_resolution.y * 0.05;
 //
     dispTexCoV.x += rand(st)*u_resolution.x * mx;
-    dispTexCoV.y+= rand(st)*u_resolution.y *my ;
-    dispTexCo.x += rand(st)*u_resolution.x * mx;
-    dispTexCo.y+= rand(st)*u_resolution.y * my;
-    
-//        dispTexCoV.x += u_resolution.x * mx;
-//        dispTexCoV.y+= u_resolution.y *my ;
-//        dispTexCo.x += rand(st)*u_resolution.x * mx;
-//        dispTexCo.y+= rand(st)*u_resolution.y * my;
+    dispTexCoV.y += rand(st)*u_resolution.y *my ;
 
+    dispTexCoV.x = mod(dispTexCoV.x, u_resolution.x);
+    dispTexCoV.y = mod(dispTexCoV.y, u_resolution.y);
     
-    col = texture(tex0, dispTexCoV);
-    colB = texture(tex0, dispTexCo);
+    col = texture(tex0, dispTexCoV * (u_mouse/u_resolution));
+//    col = texture(tex0, dispTexCoV);
+
+//    col+=scl;
+
+//    colB = texture(tex0, dispTexCo);
 //      float mx = mouseX/u_resolution.x;
 //    float my = mouseY/u_resolution.y;
 //    mx*=2.0;
@@ -164,8 +171,7 @@ void main()
 //         }else
 //              col = vec4(0.8,1.0,0.6, 1.0) ;
 //    }
-    float spoint =((((sin(u_time ))* 0.17*st.x)  + (sin(st.y *1.2 * TWO_PI +u_time ) * 0.2))+ 0.4 )*u_resolution.x;
-
+//    float spoint =((((sin(u_time ))* 0.17*st.x)  + (sin(st.y *1.2 * TWO_PI +u_time ) * 0.2))+ 0.4 )*u_resolution.x;
 //     col = vec4(col.r, col.g, col.b,mix(spoint+(sin(st.x * u_time * 3  ) * 5 ),varyingtexcoord.x, mx));
 //    if(mix(spoint+(sin(st.x * u_time * 3  ) * 5 ),varyingtexcoord.x, mx) > u_resolution.x ||mix(spoint+(sin(st.x * u_time * 3  ) * 5 ),varyingtexcoord.x, mx) <= 0.0 ){
         //black and white
@@ -189,11 +195,12 @@ void main()
 //         col = texture(tex0, dispTexCo);
 
 //    }
-//    if((sin(st.y) <=((cos(u_time))* 0.25) +0.4&& sin(st.y) >=((sin(u_time ))*0.3) +0.5 )||(sin(st.y) >=((cos(u_time))* 0.25) +0.5&& sin(st.y) <=((sin(u_time ))*0.3) +0.5 ) &&((st.x) <=((cos(u_time))* 0.3) +0.6&& st.x >=((sin(u_time ))*0.3) +0.5 )||((st.x) >=((cos(u_time))* 0.3) +0.6&& st.x <=((sin(u_time ))*0.3) +0.5 ) ){
+//    if(st.x < 0.1){
 //
 //        col = vec4(1.0, 1.0,1.0, 1.0);// - (col/2);
 //
 //    }
+
 //
     outputColor = col;
 

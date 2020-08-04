@@ -12,20 +12,22 @@ void ofApp::setup() {
     }
 #endif
    
-    //    img.load("img.jpg");
+//    img.load("blackBrain.png");
+//        logo.load("logo.svg");
     //    shader
     mx = ofGetWidth()/2;
     my = ofGetHeight()/2;
     //    plane.set(ofGetWidth()*0.8, ofGetHeight()*0.8, ofGetWidth(), ofGetHeight(), OF_PRIMITIVE_TRIANGLE_STRIP);
-    plane.set(ofGetWidth(), ofGetHeight(),1000,500, OF_PRIMITIVE_TRIANGLE_STRIP);
+//    plane.set(ofGetWidth(), ofGetHeight(),1000,500, OF_PRIMITIVE_TRIANGLE_STRIP);
+        plane.set(ofGetWidth(), ofGetHeight(), ofGetWidth(), ofGetHeight(), OF_PRIMITIVE_TRIANGLE_STRIP);
+
     //    plane.mapTexCoords(0, 0, img.getWidth(), img.getHeight());
     
     
-    f.loadFont("/Users/edmundoetgen/Documents/of_v0.10.1_osx_release/apps/myApps/type1/bin/data/HelveticaNeue-01.ttf", 30);
-    
-    vidGrabber.setDeviceID(1);
-    vidGrabber.setDesiredFrameRate(60);
-    vidGrabber.initGrabber(ofGetWidth(), ofGetHeight());
+    f.loadFont("/Users/edmundoetgen/Documents/of_v0.10.1_osx_release/apps/myApps/type1/bin/data/HelveticaNeue-01.ttf", 20);
+//    vidGrabber.listDevices();
+//    vidGrabber.setDeviceID(1);
+//    vidGrabber.initGrabber(1280, 960);
     
     string s = "  Go To  ";
     
@@ -38,147 +40,77 @@ void ofApp::setup() {
     ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
     
     plane.draw();
-    ofRectangle r = f.getStringBoundingBox(s, 0, 0);
-    ofVec2f offset = ofVec2f(floor(-r.x - r.width * 0.5f), floor(-r.y - r.height * 0.5f));
+
     ofSetColor(0);
     ofPopMatrix();
 
-    //    f.drawString(s, fbo.getWidth() / 2 + offset.x*0.9, fbo.getHeight() / 2 - offset.y);
-    s = "Every Day the Same";
+    s = "Every Day the Same • ";
     w =f.getStringBoundingBox(s, 0, 0).getWidth() * 1.;
-    ofPushMatrix();
-    ofTranslate(0, ofGetHeight()/8);
-
 
     cols = floor(ofGetWidth()*2/w);
-    rows = floor(ofGetHeight()/f.getStringBoundingBox(s, 0, 0).getHeight()*1.3);
-    for(int x = -ofGetWidth(); x <= cols + 10; x++){
+    rows = floor(ofGetHeight()/f.getStringBoundingBox(s, 0, 0).getHeight());
+    for(int x = -ofGetWidth()/2; x <= cols + 10; x++){
         for(int y = 0; y <= rows; y++){
-//                f.drawString(s, ofGetMouseX(), ofGetMouseY());
-                     f.drawString(s,( x * w)  , rows * y );
-            
-//            ofDrawEllipse(x * w - (y *(w/3))+ f.getStringBoundingBox(s, 0, 0).getWidth()  + f.getStringBoundingBox(s, 0, 0).getWidth()*0.05 ,( rows * y) - (f.getStringBoundingBox(s, 0, 0).getHeight()/3), f.getStringBoundingBox(s, 0, 0).getWidth()*0.05,f.getStringBoundingBox(s, 0, 0).getWidth()*0.05);
-//            mv *= -1;
-        }
-        
-    }
-    ofPopMatrix();
+                     f.drawString(s,( x * w) + y*(w/2) , rows * y );
 
-    //      f.drawString(s, fbo.getWidth() / 2 + offset.x*1.1, fbo.getHeight() / 2 + offset.y*2.);
-    //    ofDrawEllipse(200, 300, 500, 50);
+
+        }
+
+    }
+//
     fbo.end();
     
     ofSetBackgroundColor(190, 190, 190);
-    pos.set(650, 350);
-    dest.set(350, 350);
+    pos.set(600, 600);
+    dest.set(600, 600);
+    scale.set(767,767);
+    scale2.set(767,767);
+
     vel.set(0,0);
 }
 
 
 //--------------------------------------------------------------
 void ofApp::update() {
-    //    range = ofMap(ofGetMouseX(),0,ofGetWidth(), 2, 50);
-    //    prevRange = range;
-    //    range = ofMap(ofNoise(ofGetElapsedTimef()*2),0,1, 2, 50);
-    //    range += prevRange;
-    //    range /=2.0;
+  
     float currTime;
     float burstA;
     float rando = ofRandom(1.0);
     float rangerange= 0;
     vidGrabber.update();
-    //    if (!burst && rando > 0.99){
-    //        burst = true;
-    //        ind =0 ;
-    ////        rangerange = 50.;
-    //        unlockTimer = ofGetElapsedTimeMillis() + burstTime;
-    //        burstTime = ofRandom(400);
-    //    }
-    //    if(burst ){
-    //            burstA= 50 * abs(sin(ind));
-    //        ind+=inc;
-    //    }
-    //        rangerange = 4;
-    //
-    //    range = abs(sin(ofGetElapsedTimef() *sin(ofNoise(ofGetElapsedTimef()*0.05)) )) * rangerange + burstA;
-    //   if(ofGetElapsedTimeMillis() > unlockTimer)
-    //       burst =false;
     
-    //    mx = abs((sin(t) * 200) )+ 200;
-    //    my = ofRandom(0,800);
-    //    my = abs((cos(t*0.7424) * 300)) + 500;
-    dest.x = ofGetMouseX();
-    dest.y = ofGetMouseY();
+
     ofVec2f acc;
     acc.set(0,0);
-    ofVec2f force = pos - dest;
-    float length = force.distance(dest);
-    if(length > 0.1){
-        force = force.getNormalized();
-        force*=(-1 * 0.001 * length);
-        
-        acc+= force;
-        vel += acc;
-        vel *=  0.85;
-        pos+=vel;
-    }
-    t+=0.01;
-    std::cout  <<length<< " " << force <<"\n";
-    //    if(force > -0.1){
-    //        dest.x = ofRandom(500,800);
-    //        dest.y = ofRandom(200,500);
-    //    }
+
+    t+=0.2;
+scale2 =ofInterpolateCosine(scale2, scale, 0.2);
+    pos =  ofInterpolateCosine(pos, dest, 0.2);
+
 }
 
 //--------------------------------------------------------------
 void ofApp::draw() {
     ofSetBackgroundColor(0);
-    ofDrawEllipse(pos.x,pos.y, 1000,100);
-    //string s = "  Go To  ";
-    //    fbo.begin();
-    ////    ofPushMatrix();
-    ////    ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
-    //    vidGrabber.draw(0,0);
-    //    ofRectangle r = f.getStringBoundingBox(s, 0, 0);
-    //    ofVec2f offset = ofVec2f(floor(-r.x - r.width * 0.5f), floor(-r.y - r.height * 0.5f));
-    //    ofSetColor(0);
-    //
-    //    f.drawString(s, fbo.getWidth() / 2 + offset.x*0.9, fbo.getHeight() / 2 - offset.y);
-    //    s = "The Party";
-    //    f.drawString(s, fbo.getWidth() / 2 + offset.x*1.1, fbo.getHeight() / 2 + offset.y*2.);
-    //    //    ofDrawEllipse(200, 300, 500, 50);
-    //    fbo.end();
-    
-    // bind our texture. in our shader this will now be tex0 by default
-    // so we can just go ahead and access it there.
-    //    img.getTexture().bind();
+    ofSetColor(255,255,255,80);
+
+
+    ofSetColor(255,255,255,80);
+
+   
     fbo.getTexture().bind();
-    // start our shader, in our OpenGL3 shader this will automagically set
-    // up a lot of matrices that we want for figuring out the texture matrix
-    // and the modelView matrix
+  
     shader.begin();
     
-    // get mouse position relative to center of screen
-    float mousePosition = ofMap(mouseX, 0, ofGetWidth(), 1.0, -1.0, true);
-#ifndef TARGET_OPENGLES
-    // when texture coordinates are normalised, they are always between 0 and 1.
-    // in GL2 and GL3 the texture coordinates are not normalised,
-    // so we have to multiply the normalised mouse position by the plane width.
-    mousePosition *= plane.getWidth();
-#endif
+
     
     shader.setUniform2f("u_resolution", ofGetWidth(), ofGetHeight());
-    //    shader.setUniform1f("mouseX", ofGetMouseX());
-    //    shader.setUniform1f("mouseY", ofGetMouseY());
-    //    shader.setUniform1f("mouseX", mx);
-    //    shader.setUniform1f("mouseY", my);
+  
     shader.setUniform1f("mouseX", pos.x);
     shader.setUniform1f("mouseY", pos.y);
         shader.setUniform1f("u_time", ofGetElapsedTimef());
-//    shader.setUniform1f("u_time", 1.);
-    
-    //     shader.setUniform1f("offset", sin(ofGetElapsedTimef()) * 1000);
-    
+    shader.setUniform2f("u_mouse", scale2.x,scale2.y);
+
     ofPushMatrix();
     
     //    ofSetColor(255,0,0);
@@ -191,24 +123,63 @@ void ofApp::draw() {
     ofPopMatrix();
     
     shader.end();
-//    fbo.draw(0,0,ofGetWidth(), ofGetHeight());
-    //    img.getTexture().unbind();
-    ofSetColor(200,200,255,80);
-    ofDrawEllipse(dest.x,dest.y, 100,100);
 
+    ofSetColor(255,200,200,alphaR);
+    ofDrawEllipse(dest.x,dest.y, 100,100);
+    ofSetColor(200,200,255,alphaB);
+    ofDrawEllipse(scale.x,scale.y, 100,100);
+    ofPushStyle();
+    ofSetColor(255);
+
+    int wid =ofGetWidth()/25;
+    int hei =wid;//ofGetHeight()/25;
+    ofDrawRectangle(0, 0, wid, ofGetHeight());
+    ofDrawRectangle(0, ofGetHeight() - hei, ofGetWidth(),hei);
+    ofDrawRectangle(0, 0, ofGetWidth(), hei);
+    ofDrawRectangle(ofGetWidth() - wid, 0, wid, ofGetHeight());
+    
+    ofSetColor(220,220, 220);
+
+    ofDrawRectangle(0, 0, wid, ofGetHeight());
+//    ofSetColor(0,255, 0,40);
+
+     ofDrawRectangle(0, ofGetHeight() - hei, ofGetWidth(),hei);
+//    ofSetColor(0,0, 255,40);
+
+    ofDrawRectangle(0, 0, ofGetWidth(), hei);
+//    ofSetColor(255,255, 0,40);
+
+    ofDrawRectangle(ofGetWidth() - wid, 0, wid, ofGetHeight());
+
+    ofSetColor(60,60, 80, 40);
+    ofDrawRectangle(pos.x-wid,  0, wid *2 ,hei/2);
+    ofDrawRectangle(dest.x-wid, hei/2, wid*2 ,hei/2);
+    ofDrawRectangle(scale2.x-wid, ofGetHeight() - hei/2, wid*2 ,hei/2);
+    ofDrawRectangle(scale.x-wid, ofGetHeight() - hei, wid*2 ,hei/2);
+
+    ofDrawRectangle(0,  pos.y - hei, wid/2 ,hei * 2);
+    ofDrawRectangle(wid/2, dest.y- hei, wid/2 ,hei * 2);
+    ofDrawRectangle(ofGetWidth() - wid/2, scale2.y- hei, wid/2 ,hei*2);
+    ofDrawRectangle(ofGetWidth() - wid, scale.y- hei, wid/2 ,hei*2);
+    ofPopStyle();
+//    logo.draw(0,0, 100,100);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     
-    dest.x = ofRandom(500,800);
-    dest.y = ofRandom(200,500);
+    dest.x = ofGetWidth()/2;//ofRandom(500,1000);
+    dest.y = ofGetHeight()/2;//ofRandom(200,500);
     std::cout << mx << " " << my << "\n";
+    if (key == ' '){
+        scale.x = 767;
+    scale.y= 767;
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-    
+
 }
 
 //--------------------------------------------------------------
@@ -219,16 +190,36 @@ void ofApp::mouseMoved(int x, int y){
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
     
+    if(ofDist(x, y, dest.x, dest.y) <100 && button ==0){
+        dest.x = x;
+    dest.y= y;
+    }
+    if(ofDist(x, y, scale.x, scale.y) <100&& button ==2){
+        scale.x = x;
+        scale.y= y;
+    }
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    
+    if(ofDist(x, y, dest.x, dest.y) <100){
+//        dest.x = x;
+//        dest.y= y;
+        alphaR = 100;
+    }
+    if(ofDist(x, y, scale.x, scale.y) <100){
+//        scale.x = x;
+//        scale.y= y;
+        alphaB = 100;
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-    
+        alphaR = 40;
+    alphaB = 40;
+
 }
 
 //--------------------------------------------------------------

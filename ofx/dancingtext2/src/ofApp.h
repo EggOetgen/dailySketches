@@ -21,7 +21,7 @@ public:
     
     ofShader shader;
     ofPlanePrimitive plane;
-    ofImage img;
+    ofImage img, logo;
     
     ofFbo fbo;
     float range = 10.0;
@@ -43,6 +43,9 @@ public:
     float mx, my;
     
     
-    ofVec2f pos, dest, vel;
+    ofVec2f pos, dest, vel, scale, scale2;
     float t = 0;
+    float alphaR = 40;
+    float alphaB = 40;
+
 };
