@@ -65,6 +65,9 @@ ipch/
 local.properties
 .externalToolBuilders
 
+# VS Code
+**/.vscode
+**/*.code-workspace
 ##################
 # operating system
 ##################
