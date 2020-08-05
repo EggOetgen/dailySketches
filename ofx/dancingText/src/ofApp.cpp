@@ -23,7 +23,7 @@ void ofApp::setup() {
     
     f.loadFont("/Users/edmundoetgen/Documents/of_v0.10.1_osx_release/apps/myApps/type1/bin/data/HelveticaNeue-01.ttf", 160);
     
-     vidGrabber.setDeviceID(1);
+    //  vidGrabber.setDeviceID(1);
     vidGrabber.setDesiredFrameRate(60);
     vidGrabber.initGrabber(ofGetWidth(), ofGetHeight());
 
