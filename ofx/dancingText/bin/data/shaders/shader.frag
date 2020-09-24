@@ -190,7 +190,7 @@ void main()
 //    }
 //    if((sin(st.y) <=((cos(u_time))* 0.25) +0.4&& sin(st.y) >=((sin(u_time ))*0.3) +0.5 )||(sin(st.y) >=((cos(u_time))* 0.25) +0.5&& sin(st.y) <=((sin(u_time ))*0.3) +0.5 ) &&((st.x) <=((cos(u_time))* 0.3) +0.6&& st.x >=((sin(u_time ))*0.3) +0.5 )||((st.x) >=((cos(u_time))* 0.3) +0.6&& st.x <=((sin(u_time ))*0.3) +0.5 ) ){
 //
-//        col = vec4(1.0, 1.0,1.0, 1.0);// - (col/2);
+//        col = vec4(varyingtexcoord.y, varyingtexcoord.y,varyingtexcoord.y, 1.0);// - (col/2);
 //
 //    }
 //

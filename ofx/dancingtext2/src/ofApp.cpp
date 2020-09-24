@@ -25,9 +25,9 @@ void ofApp::setup() {
     
     
     f.loadFont("/Users/edmundoetgen/Documents/of_v0.10.1_osx_release/apps/myApps/type1/bin/data/HelveticaNeue-01.ttf", 20);
-//    vidGrabber.listDevices();
-//    vidGrabber.setDeviceID(1);
-//    vidGrabber.initGrabber(1280, 960);
+    vidGrabber.listDevices();
+    vidGrabber.setDeviceID(1);
+    vidGrabber.initGrabber(1280, 960);
     
     string s = "  Go To  ";
     
@@ -78,7 +78,18 @@ void ofApp::update() {
     float rando = ofRandom(1.0);
     float rangerange= 0;
     vidGrabber.update();
+    fbo.begin();
+    ofPushMatrix();
+    ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
     
+    plane.draw();
+    
+    ofSetColor(255,255,255,255);
+    ofPopMatrix();
+    
+    vidGrabber.draw(0, 0, ofGetWidth(), ofGetHeight());
+    //
+    fbo.end();
 
     ofVec2f acc;
     acc.set(0,0);

@@ -36,12 +36,18 @@ void main()
        float my = mouseY/u_resolution.y;
     mx*=2.0;
     my*=5.0;
+    
+//    mx*=2.0;
+//    my*=5.0;
 //         if(((st.x) <(((cos(u_time ))* 0.2*st.x)  + (sin(st.y * TWO_PI +u_time ) * 0.2))+ 0.8 ) &&  ( (st.x) >(((sin(u_time ))* 0.17*st.x)  + (sin(st.y *1.2 * TWO_PI +u_time ) * 0.2))+ 0.4 )){
 //        float spoint = abs((((cos(u_time)) *0.2) +0.5) -(((sin(u_time *0.8))*0.3) +0.5 )) * u_resolution.x;
 //        float spoint = (((cos(u_time))* 0.1) +0.6)*u_resolution.y ;//(cos(u_time)* 0.3) +0.6;  float spoint
-             float spoint =((((sin(u_time ))* 0.17*st.x)  + (sin(st.y *1.2 * TWO_PI +u_time ) * 0.2))+ 0.4 )*u_resolution.x;
+    float spoint =((((sin(u_time ))* 0.17*st.x)  + (sin(st.y *1.2 * TWO_PI +u_time ) * 0.2))+ 0.4 )*u_resolution.x;
 //             float spoint = mouseX;
-         varyingtexcoord = vec2(mix(spoint+(sin(st.x * u_time * 3  ) * 5 ),texcoord.x, mx) , mix(texcoord.y+(cos(st.y * u_time * 2  ) * 5 ),texcoord.y, my) );
+//         varyingtexcoord = vec2(mix(spoint+(sin(st.x * u_time * 3  ) * 5 ),texcoord.x, mx) , mix(texcoord.y+(cos(st.y * u_time * 2  ) * 5 ),texcoord.y, my) );
+    
+    varyingtexcoord = vec2(mix(spoint+(sin(st.x * u_time * 3  ) * 5 ),texcoord.x, mx) ,texcoord.y );
+
 //         }
 //      varyingtexcoord = vec2(mix(spoint+(sin(st.x * u_time * 3  ) * 5 ),texcoord.x, -2.0) , mix(texcoord.y+(cos(st.y * u_time * 2  ) * 5 ),texcoord.y, 2.0) );
 //     if(mix(spoint+(sin(st.x * u_time * 3  ) * 5 ),varyingtexcoord.x, mx) > u_resolution.x ||mix(spoint+(sin(st.x * u_time * 3  ) * 5 ),varyingtexcoord.x, mx) <= 0.0 ){

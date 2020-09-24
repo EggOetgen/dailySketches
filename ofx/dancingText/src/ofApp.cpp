@@ -16,7 +16,9 @@ void ofApp::setup() {
 //    shader
     mx = ofGetWidth()/2;
     my = ofGetHeight()/2;
-    plane.set(ofGetWidth()*0.8, ofGetHeight()*0.8, ofGetWidth(), ofGetHeight(), OF_PRIMITIVE_TRIANGLE_STRIP);
+//    plane.set(ofGetWidth()*0.8, ofGetHeight()*0.8, ofGetWidth(), ofGetHeight(), OF_PRIMITIVE_TRIANGLE_STRIP);
+    plane.set(ofGetWidth()*0.8, ofGetHeight()*0.8, 100, 100, OF_PRIMITIVE_TRIANGLE_STRIP);
+
 //      plane.set(ofGetWidth(), ofGetHeight(),1000,500, OF_PRIMITIVE_TRIANGLE_STRIP);
     //    plane.mapTexCoords(0, 0, img.getWidth(), img.getHeight());
     
@@ -30,7 +32,7 @@ void ofApp::setup() {
     string s = "  Go To  ";
     
     fbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA);
-    ofSetColor(255, 255, 255);
+    ofSetColor(255, 0, 255);
     plane.mapTexCoords(0, fbo.getHeight(), fbo.getWidth(), 0);
  
     fbo.begin();
@@ -164,7 +166,7 @@ void ofApp::draw() {
 //    ofSetColor(255,0,0);
     ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
      
-    //    plane.drawWireframe();
+//        plane.drawWireframe();
     plane.draw();
     
     
